@@ -49,6 +49,30 @@ ARGUMENTS = [
                           default_value='false',
                           choices=['true', 'false'],
                           description='use foxglove websocket'),
+    DeclareLaunchArgument('cam',
+                          default_value='false',
+                          choices=['true', 'false'],
+                          description='Use camera'),
+    DeclareLaunchArgument('cam',
+                          default_value='false',
+                          choices=['true', 'false'],
+                          description='Use camera'),
+    DeclareLaunchArgument('cam',
+                          default_value='false',
+                          choices=['true', 'false'],
+                          description='Use camera'),
+    DeclareLaunchArgument('cam_topic',
+                          default_value='/ov5645/image_raw',
+                          description='Camera topic name.'),
+    DeclareLaunchArgument('cam_dev',
+                          default_value='/dev/video3',
+                          description='Camera device.'),
+    DeclareLaunchArgument('cam_fps',
+                          default_value='30',
+                          description='Camera frames per second.'),
+    DeclareLaunchArgument('cam_res',
+                          default_value='[640,480]',
+                          description='Camera resolution [wpix,hpix]'),
 ]
 
 def generate_launch_description():
@@ -130,6 +154,19 @@ def generate_launch_description():
                         ('capabilities', LaunchConfiguration('capabilities')),
                         ('use_sim_time', LaunchConfiguration('use_sim_time'))])
 
+    cam = Node(
+        condition=IfCondition(LaunchConfiguration('cam')),
+        package='nxp_cv_cam',
+        executable='nxp_cv_cam_node',
+        output='screen',
+        parameters=[{
+            'camera_topic': LaunchConfiguration('cam_topic'),
+            'device': LaunchConfiguration('cam_dev'),
+            'framerate': LaunchConfiguration('cam_fps'),
+            'resolution': LaunchConfiguration('cam_res'),
+            'use_sim_time': LaunchConfiguration('use_sim_time'),
+            }])
+
     # Define LaunchDescription variable
     return LaunchDescription(ARGUMENTS + [
         robot_description,
@@ -141,4 +178,5 @@ def generate_launch_description():
         laser,
         localization,
         odom_to_tf,
+        cam,
     ])
