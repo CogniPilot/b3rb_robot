@@ -53,14 +53,6 @@ ARGUMENTS = [
                           default_value='false',
                           choices=['true', 'false'],
                           description='Use camera'),
-    DeclareLaunchArgument('cam',
-                          default_value='false',
-                          choices=['true', 'false'],
-                          description='Use camera'),
-    DeclareLaunchArgument('cam',
-                          default_value='false',
-                          choices=['true', 'false'],
-                          description='Use camera'),
     DeclareLaunchArgument('cam_topic',
                           default_value='/ov5645/image_raw',
                           description='Camera topic name.'),
@@ -73,6 +65,9 @@ ARGUMENTS = [
     DeclareLaunchArgument('cam_res',
                           default_value='[640,480]',
                           description='Camera resolution [wpix,hpix]'),
+    DeclareLaunchArgument('cam_rot',
+                          default_value='2',
+                          description='Hardware image rotation enum: (0): none, (1): rotate-90, (2): rotate-180, (3): rotate-270, (4): horizontal-flip, (5): vertical-flip'),
 ]
 
 def generate_launch_description():
@@ -156,14 +151,15 @@ def generate_launch_description():
 
     cam = Node(
         condition=IfCondition(LaunchConfiguration('cam')),
-        package='nxp_cv_cam',
-        executable='nxp_cv_cam_node',
+        package='imx_ov5645',
+        executable='imx_ov5645_node',
         output='screen',
         parameters=[{
             'camera_topic': LaunchConfiguration('cam_topic'),
             'device': LaunchConfiguration('cam_dev'),
             'framerate': LaunchConfiguration('cam_fps'),
             'resolution': LaunchConfiguration('cam_res'),
+            'rotation': LaunchConfiguration('cam_rot'),
             'use_sim_time': LaunchConfiguration('use_sim_time'),
             }])
 
