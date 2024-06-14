@@ -46,7 +46,7 @@ ARGUMENTS = [
         choices=['true', 'false'],
         description='Use camera'),
     DeclareLaunchArgument('foxglove',
-        default_value='true',
+        default_value='false',
         choices=['true', 'false'],
         description='use foxglove websocket'),
     DeclareLaunchArgument('address', default_value='{:s}'.format(ip),
