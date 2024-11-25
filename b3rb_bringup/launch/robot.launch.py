@@ -81,7 +81,6 @@ def generate_launch_description():
         launch_arguments=[('use_sim_time', LaunchConfiguration('use_sim_time'))])
 
     odom_to_tf = Node(
-        condition=IfCondition(LaunchConfiguration('corti')),
         package='corti',
         executable='odom_to_tf',
         output='screen',
