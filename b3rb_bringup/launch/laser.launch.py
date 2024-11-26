@@ -46,8 +46,8 @@ def generate_launch_description():
             {'y_crop_max': 0.09},
             {'bins': 360},
             {'range_min': 0.03},
-            {'range_max': 5.0},
-            {'pub_rate': 2.0}
+            {'range_max': 10.0},
+            {'pub_rate': 10.0}
             ],
         condition=IfCondition(LaunchConfiguration("stl27l"))
     )

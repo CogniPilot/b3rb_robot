@@ -31,8 +31,7 @@ ARGUMENTS = [
     DeclareLaunchArgument('log_level', default_value='error',
         choices=['info', 'warn', 'error'],
         description='log level'),
-    DeclareLaunchArgument('cam',
-        default_value='true',
+    DeclareLaunchArgument('cam', default_value='false',
         choices=['true', 'false'],
         description='Use camera'),
     DeclareLaunchArgument('map_yaml', default_value='basic_map.yaml',
@@ -81,7 +80,6 @@ def generate_launch_description():
         launch_arguments=[('use_sim_time', LaunchConfiguration('use_sim_time'))])
 
     odom_to_tf = Node(
-        condition=IfCondition(LaunchConfiguration('corti')),
         package='corti',
         executable='odom_to_tf',
         output='screen',
